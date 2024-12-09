@@ -5,9 +5,15 @@ on:
     branches:
       - production
 
+
+permissions:
+  contents: read
+  id-token: write
+
 env: # Define environment variables for the entire workflow
   AZURE_RESOURCE_GROUP: "cloet-rg-production-westeurope-01" # Resource group for staging
   AZURE_WEBAPP_NAME: "cloet-appservice-staging" # App Service name for staging
+
 
 jobs:
   build:
