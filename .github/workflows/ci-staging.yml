@@ -1,0 +1,60 @@
+name: CI/CD for Staging
+
+on:
+  push:
+    branches:
+      - staging
+
+env: # Define environment variables for the entire workflow
+  AZURE_RESOURCE_GROUP: "cloet-rg-staging-westeurope-01" 
+  AZURE_WEBAPP_NAME: "cloet-appservice-staging" 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v3
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0'
+
+    - name: Restore and Publish Application
+      run: |
+        dotnet restore
+        dotnet publish -c Release -o publish
+
+    - name: Create ZIP file
+      run: zip -r MinimalApi.zip publish/
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: MinimalApi
+        path: MinimalApi.zip
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: MinimalApi
+
+    - name: Authenticate with Azure
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Deploy to Staging App Service
+      run: |
+        az webapp deploy --resource-group <staging-resource-group> \
+                         --name <staging-app-service-name> \
+                         --src-path MinimalApi.zip
