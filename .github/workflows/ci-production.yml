@@ -32,7 +32,8 @@ jobs:
         dotnet publish -c Release -o publish
 
     - name: Create ZIP file
-      run: zip -r MinimalApi.zip .
+      run: zip -r MinimalApi.zip ./wwwroot
+
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
@@ -63,3 +64,4 @@ jobs:
         az webapp deploy --resource-group ${{env.AZURE_RESOURCE_GROUP}} \
                          --name ${{env.AZURE_WEBAPP_NAME}} \
                          --src-path MinimalApi.zip
+                         -- type zip
