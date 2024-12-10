@@ -12,7 +12,7 @@ permissions:
 
 env: # Define environment variables for the entire workflow
   AZURE_RESOURCE_GROUP: "cloet-rg-production-westeurope-01" # Resource group for staging
-  AZURE_WEBAPP_NAME: "cloet-appservice-staging" # App Service name for staging
+  AZURE_WEBAPP_NAME: "cloet-appservice-production" # App Service name for staging
 
 
 jobs:
@@ -61,6 +61,6 @@ jobs:
 
     - name: Deploy to Production App Service
       run: |
-        az webapp deploy --resource-group <production-resource-group> \
-                         --name <production-app-service-name> \
+        az webapp deploy --resource-group ${{AZURE_RESOURCE_GROUP}} \
+                         --name ${{AZURE_WEBAPP_NAME}} \
                          --src-path MinimalApi.zip

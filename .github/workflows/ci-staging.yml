@@ -60,8 +60,8 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Deploy to Staging App Service
+    - name: Deploy to Production App Service
       run: |
-        az webapp deploy --resource-group <staging-resource-group> \
-                         --name <staging-app-service-name> \
+        az webapp deploy --resource-group ${{AZURE_RESOURCE_GROUP}} \
+                         --name ${{AZURE_WEBAPP_NAME}} \
                          --src-path MinimalApi.zip
