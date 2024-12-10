@@ -27,13 +27,13 @@ jobs:
     - name: Restore and Publish Application
       run: |
         dotnet restore
-        dotnet publish -c Release -o publishv1
+        dotnet publish -c Release -o publish
 
     
 
     - name: Create Zip File
       run: |
-        cd publishv1
+        cd publish
         zip -r ../MinimalApi.zip .
         cd ..
 
