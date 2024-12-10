@@ -30,7 +30,7 @@ jobs:
         dotnet publish -c Release -o publish
 
     - name: Create ZIP file
-      run: zip -r MinimalApi.zip publish/
+      run: zip -r MinimalApi.zip .
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
