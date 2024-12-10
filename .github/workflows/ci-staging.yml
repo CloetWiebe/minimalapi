@@ -32,10 +32,10 @@ jobs:
     
 
     - name: Create Zip File
-        run: |
-          cd publish
-          zip -r ../MinimalApi.zip .
-          cd ..
+      run: |
+        cd publish
+        zip -r ../MinimalApi.zip .
+        cd ..
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
