@@ -60,5 +60,5 @@ jobs:
       run: |
         az webapp deploy --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
                          --name ${{ env.AZURE_WEBAPP_NAME }} \
-                         --src-path MinimalApi.zip
+                         --src-path MinimalApi.zip \
                          --type zip
