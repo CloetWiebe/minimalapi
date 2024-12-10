@@ -60,6 +60,6 @@ jobs:
 
     - name: Deploy to Production App Service
       run: |
-        az webapp deploy --resource-group <production-resource-group> \
-                         --name <production-app-service-name> \
+        az webapp deploy --resource-group ${{AZURE_RESOURCE_GROUP}} \
+                         --name ${{AZURE_WEBAPP_NAME}} \
                          --src-path MinimalApi.zip
